@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumina::Home</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    />
+    <link rel="icon" type="image/png" href="images/luminalogo-clear.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      /* For background colors */
+      .has-background-red {
+        background-color: #c5050c;
+      }
+
+      /* For text colors */
+      .has-text-red {
+        color: #c5050c;
+      }
+
+      /* For button colors */
+      .is-red {
+        background-color: #c5050c;
+        color: #fff;
+      }
+
+      .is-red-active {
+        background-color: #a90408 !important; /* Slightly darker red for the active button */
+        color: #fff !important;
+        font-weight: 600 !important;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem 2rem 1rem;
+      text-align: center;
+      background-image: url("images/luminahero.jpg");
+      background-size: cover;
+      background-position: center;
+      }
+
+      .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #c5050c;
+      /* White outline using multiple text-shadows */
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+          1px 1px 0 #fff, 0px -1px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff,
+          1px 0px 0 #fff;
+      }
+      .has-text-shadow2 {
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+          1px 1px 0 #fff, 0px -1px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff,
+          1px 0px 0 #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- navbar -->
+    <nav class="navbar is-white" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <a id="headlogo" class="navbar-item mt-3" href="index.html">
+            <img
+              src="images/luminalogo-clear.png"
+              alt="Lumina Logo"
+              style="max-height: 2.25rem"
+            />
+            <span class="has-text-red has-text-weight-semibold is-size-3 m-2"
+              >Lumina</span
+            >
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="mainNavbar"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="mainNavbar" class="navbar-menu">
+          <div class="navbar-start"></div>
+
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <button
+                  id="navindex"
+                  class="button is-light has-text-grey is-size-5 has-text-weight-semibold is-red-active"
+                >
+                  Home
+                </button>
+
+                <button
+                  id="navbrowse"
+                  class="button is-light has-text-grey is-size-5 has-text-weight-semibold"
+                >
+                  Browse Groups
+                </button>
+                <button
+                  id="navcreate"
+                  class="button is-light has-text-grey is-size-5 has-text-weight-semibold signedin is-hidden"
+                >
+                  Create Group
+                </button>
+                <button 
+                  id="navsignup"
+                  class="button js-modal-trigger is-red is-size-5 has-text-weight-bold signedout"
+                > <!-- js modal trigger-->
+                  Sign Up
+                </button>
+                <button
+                  id="navlogin"
+                  class="button js-modal-trigger is-red is-size-5 has-text-weight-semibold signedout"
+                >
+                  Log In
+                </button>
+                <button
+                  id="navsignout"
+                  class="button js-modal-trigger is-red is-size-5 has-text-weight-semibold signedin is-hidden"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- SIGN UP MODAL navsignup is the id for the signup button--> 
+   
+
+
+<!-- Modal markup FOR SIGNUP-->
+<div id="signupModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-background" data-modal-close></div>
+
+  <div class="modal-content" role="document">
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-red has-text-weight-bold">Create an account</p>
+        
+      </header>
+
+      <section class="modal-card-body">
+  <form id="signupForm">
+    <div class="field">
+      <label class="label" for="email">Email</label>
+      <div class="control">
+        <input class="input" id="signupemail" name="email" type="email" required />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="password">Password</label>
+      <div class="control">
+        <input class="input" id="signuppassword" name="password" type="password" required />
+      </div>
+    </div>
+    <div id = "signuperror" class="has-text-red has-text-weight-semibold is-size-6 mt-2 mb-0"></div>
+      </section>
+ 
+    <footer class="modal-card-foot" style="border-top:0; padding-top:0;">
+      <button id= "signupsubmitButton"class="button is-red mr-3 my-2" type="submit">Sign up</button>
+      <button id = "cancelButton" class="button mx-3 my-2" data-modal-close type="button">Cancel</button>
+    </footer>
+    </form>
+    </div>
+  </div>
+  </div>
+
+<!-- Modal markup FOR LOGIN -->
+<div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-background" data-modal-close></div>
+
+  <div class="modal-card">
+    <form id="loginForm">
+      
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-red has-text-weight-bold">Sign into an Account</p>
+      </header>
+
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <div class="control">
+            <input class="input" id="loginemail" name="email" type="email" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="password">Password</label>
+          <div class="control">
+            <input class="input" id="loginpassword" name="password" type="password" required />
+          </div>
+        </div>
+          <div id = "loginerror" class="has-text-red has-text-weight-semibold is-size-6 mt-2 mb-0 is-hidden">Invalid Credentials</div>
+
+      </section>
+     
+      <footer class="modal-card-foot" style="border-top:0; padding-top:0;">
+        <button id="loginsubmitButton" class="button is-red mr-3" type="submit">Login</button>
+        <button id = "cancelButton" class="button mx-3 my-2" data-modal-close type="button">Cancel</button>
+      </footer>
+
+    </form>
+  </div>
+</div>
+
+<!-- Create group Modal -->
+ <div id="createGroupModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-background" data-modal-close></div>
+
+  <div class="modal-card">
+    <form id="createGroupForm">
+      
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-red has-text-weight-bold">Create a New Study Group</p>
+        <button class="delete" aria-label="close" data-modal-close></button>
+      </header>
+
+      <section class="modal-card-body">
+        
+        <div class="field">
+          <label class="label" for="className">Class Name (e.g., MATH 221)</label>
+          <div class="control">
+            <input class="input" id="className" name="className" type="text" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="meetingTimes">Meeting Time(s) (e.g., Wed 6pm, Fri 4pm)</label>
+          <div class="control">
+            <input class="input" id="meetingTimes" name="meetingTimes" type="text" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="meetingLocation">Meeting Location</label>
+          <div class="control">
+            <input class="input" id="meetingLocation" name="meetingLocation" type="text" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="meetingFocus">Meeting Focus</label>
+          <div class="control">
+            <textarea class="textarea" id="meetingFocus" name="meetingFocus" rows="3" required></textarea>
+          </div>
+        </div>
+
+      </section>
+     
+      <footer class="modal-card-foot" style="border-top:0; padding-top:0;">
+        <button id="createGroupSubmit" class="button is-red mr-3" type="submit">Create Group</button>
+        <button id="createGroupCancel" class="button mx-3 my-2" type="button">Cancel</button>
+      </footer>
+
+    </form>
+  </div>
+</div>
+
+
+    <!-- Index Page -->
+    <main id="indexpage" class="my-0 py-0">
+      <section
+        class="hero is-small"
+        style="
+          background-image: url('images/luminahero.jpg');
+          background-size: cover;
+          background-position: center;
+        "
+      >
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h1
+              class="title is-1 has-text-centered has-text-red has-text-weight-bold has-text-shadow"
+            >
+              Find Your Study Group Today
+            </h1>
+            <h2
+            id="signupprompt" class="title is-3 has-text-centered has-text-red has-text-weight-bold has-text-shadow2">
+              Sign up or log in to join!
+            </h2>
+        </div>
+      </section>
+      <section class="section has-background-grey-lighter">
+        <div class="container">
+          <div id="homeGroupCards" class="columns is-multiline is-centered">
+            <div class="column is-5 m-2">
+              <div class="box has-text-centered p-4 has-background-light">
+                <h2 class="title is-5 has-text-red">Accounting 211</h2>
+                <p class="has-text-grey">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >When:</strong
+                  >
+                  Wed 6pm
+                </p>
+                <p class="has-text-grey">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >Where:</strong
+                  >
+                  Memorial Library
+                </p>
+                <p class="has-text-grey mb-4">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >Focus:</strong
+                  >
+                  Weekly problem sets and exam prep
+                </p>
+                <button id = "join_button" class="button is-red is-hidden">Join Group</button>
+              </div>
+            </div>
+
+            <div class="column is-5 m-2">
+              <div class="box has-text-centered p-4 has-background-light">
+                <h2 class="title is-5 has-text-red">Marketing 300</h2>
+                <p class="has-text-grey">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >When:</strong
+                  >
+                  Fri 4pm
+                </p>
+                <p class="has-text-grey">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >Where:</strong
+                  >
+                  Grainger Hall
+                </p>
+                <p class="has-text-grey mb-4">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >Focus:</strong
+                  >
+                  Case study discussions and project work
+                </p>
+                <button id="join_button" class="button is-red is-hidden">Join Group</button>
+              </div>
+            </div>
+
+            <div class="column is-5 m-2">
+              <div class="box has-text-centered p-4 has-background-light">
+                <h2 class="title is-5 has-text-red">Information Systems 322</h2>
+                <p class="has-text-grey">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >When:</strong
+                  >
+                  Mon 7pm
+                </p>
+
+                <p class="has-text-grey">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >Where:</strong
+                  >
+                  Union South
+                </p>
+                <p class="has-text-grey mb-4">
+                  <strong class="has-text-dark has-text-weight-semibold"
+                    >Focus:</strong
+                  >
+                  ERD and database design
+                </p>
+                <button id = "join_button" class="button is-red is-hidden">Join Group</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="has-text-centered mt-5">
+          <button id="navbrowse2" class="button is-red is-medium">
+            View More Groups
+          </button>
+        </div>
+      </section>
+    </main>
+
+
+
+
+
+    
+    <!-- Browse Groups page -->
+    <main id="browsegroupspage" class="is-hidden my-0 py-0">
+      <section
+        class="hero is-small"
+        style="
+          background-image: url('images/luminahero.jpg');
+          background-size: cover;
+          background-position: center;
+        "
+      >
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title is-2 has-text-red has-text-centered">
+              Browse Study Groups
+            </h1>
+          </div>
+        </div>
+      </section>
+      <!-- Search bar -->
+  <section class="section has-background-white-ter py-5 my-0">
+        <div class="container">
+          <div class="columns is-multiline is-centered is-vcentered">
+            <div class="column is-4 m-4">
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <input class="input is-rounded has-text-dark" type="text" id="searchInput" placeholder="Search for a class... (e.g MATH 211)" />
+                </div>
+                <div class="control">
+                  <button type="button" class="button is-red" id="searchbtn">
+                    <span class="icon is-small"><i class="fa fa-search" aria-hidden="true"></i></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+<!-- Filters -->
+ <div class="column is-2">
+              <div class="field">
+                <label class="label has-text-red">Filter by Subject:</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select id="subjectFilter">
+                      <option value="all">All Subjects</option>
+                      <option value="accounting">Accounting</option>
+                      <option value="biology">Biology</option>
+                      <option value="chemistry">Chemistry</option>
+                      <option value="computer-science">Computer Science</option>
+                      <option value="economics">Economics</option>
+                      <option value="finance">Finance</option>
+                      <option value="marketing">Marketing</option>
+                      <option value="mathematics">Mathematics</option>
+                      <option value="psychology">Psychology</option>
+                      <option value="statistics">Statistics</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="column is-2">
+              <div class="field">
+                <label class="label has-text-red">Filter by Day:</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select id="dayFilter">
+                      <option value="">Any Day</option>
+                      <option value="monday">Monday</option>
+                      <option value="tuesday">Tuesday</option>
+                      <option value="wednesday">Wednesday</option>
+                      <option value="thursday">Thursday</option>
+                      <option value="friday">Friday</option>
+                      <option value="saturday">Saturday</option>
+                      <option value="sunday">Sunday</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- class cards -->
+      <section class="section py-5 has-background-grey-lighter">
+        <div class="container">
+            <div id="browseGroupCards" class="columns is-multiline is-variable is-centered">            
+            </div>
+            </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- About page -->
+    <main id="aboutpage" class="is-hidden my-0 py-0">
+      <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-2 has-text-red has-text-centered">About Lumina</h1>
+            </div>
+        </div>
+      </section>
+    
+      <section class="section has-background-grey-lighter">
+        <div class="container is-flex is-justify-content-center">
+            <div class="box is-fullwidth p-6" style="max-width: 800px;">
+                
+                <div class="content">
+                    <h2 class="title is-5 has-text-red">Our Mission</h2>
+                    <p>
+                        At Lumina, our mission is to illuminate the path for
+                        collaborative study sessions at UW-Madison.
+                    </p>
+                    <p>
+                        Our platform provides resources, tools, and support to help
+                        learners and educators connect, grow, and succeed.
+                    </p>
+                </div>
+                
+                <div class="content">
+                    <h2 class="title is-5 has-text-red">What We Offer</h2>
+                    <ul>
+                        <li>Make group study accessible, inclusive, and easy to organize.</li>
+                        <li>Foster a supportive and engaging learning community</li>
+                        <li>Empower Students to take control of their academic success</li>
+                    </ul>
+                </div>
+                
+                <div class="content">
+                    <h2 class="title is-5 has-text-red">Our Team</h2>
+                    <p><strong>Maxwell Werner</strong> - Co-Founder</p>
+                    <p><strong>Friday Mishra</strong> - Co-Founder</p>
+                </div>
+                  
+              </div>
+          </div>
+      </section>
+    </main>
+
+    <!-- Contact page -->
+    <main id="contactpage" class="is-hidden my-0 py-0">
+      <section
+        class="hero is-small"
+        style="
+          background-image: url('images/luminahero.jpg');
+          background-size: cover;
+          background-position: center;
+        "
+      >
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title is-2 has-text-red has-text-centered">Contact Us</h1>
+                <p class="subtitle is-6 has-text-white has-text-centered">
+                    Please send us a message about any issues or feedback and we'll respond as soon as possible.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section has-background-grey-lighter">
+        <div class="container is-flex is-justify-content-center">
+            <div class="box is-fullwidth p-6" style="max-width: 600px;">
+                <form>
+                    <div class="field">
+                        <label class="label">Name <span class="has-text-red">*</span></label>
+                        <div class="control">
+                            <input class="input" type="text" id="name" name="name" required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email <span class="has-text-red">*</span></label>
+                        <div class="control">
+                            <input class="input" type="email" id="emailcontact" name="email" required />
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Subject <span class="has-text-red">*</span></label>
+                        <div class="control">
+                            <input class="input" type="text" id="subject" name="subject" required />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Description <span class="has-text-red">*</span></label>
+                        <div class="control">
+                            <textarea class="textarea" id="description" name="description" rows="6" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Attachments</label>
+                        <div class="control">
+                            <div class="file has-name is-fullwidth">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" id="attachment" name="attachment" multiple />
+                                    <span class="file-cta">
+                                        <span class="file-icon"><i class="fa fa-upload"></i></span>
+                                        <span class="file-label">Choose files…</span>
+                                    </span>
+                                    <span class="file-name">Multiple files allowed</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="button is-red is-fullwidth mt-4">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer class="footer has-background-white p-4">
+      <div class="container">
+        <div class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item">
+              <span class="has-text-grey is-size-6">© 2025 Lumina</span>
+            </div>
+          </div>
+
+          <div class="level-right">
+            <div class="level-item">
+              <div class="buttons">
+                <button
+                  id="navcontact"
+                  class="button has-text-red has-background-light"
+                >
+                  Contact
+                </button>
+                <button
+                  id="navabout"
+                  class="button has-text-red has-background-light"
+                >
+                  About Us
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+<!-- Firebase -->
+
+    <!-- Firebase App  -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+
+
+    <!-- Add Firebase products  -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
+    <script>
+      // TODO
+      // Copy **only** your firebaseConfig from Google Firebae and add it below
+      const firebaseConfig = {
+        apiKey: "AIzaSyBu7iBr6-cvrt-FfRIVUyXsr1E8p4iTInc",
+        authDomain: "lumina-uw.firebaseapp.com",
+        projectId: "lumina-uw",
+        storageBucket: "lumina-uw.firebasestorage.app",
+        messagingSenderId: "406409318335",
+        appId: "1:406409318335:web:e6b9bb982559cb20e49b0a",
+        measurementId: "G-GX88WTJP34"
+      };
+      // Your web app's Firebase configuration
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // define authentication variable
+      let auth = firebase.auth();
+      let db = firebase.firestore();
+
+      // define a storage reference
+      let ref = firebase.storage().ref();
+    </script>
+    <!-- make sure to add your own js file as the last line in index.html file -->
+    <script src="app.js"></script>
+  </body>
+  </html>
